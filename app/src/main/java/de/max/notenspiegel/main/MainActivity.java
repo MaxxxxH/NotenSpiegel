@@ -9,7 +9,7 @@ import androidx.fragment.app.FragmentManager;
 import de.max.notenspiegel.R;
 import de.max.notenspiegel.databinding.ActivityMainBinding;
 import de.max.notenspiegel.dialog.AddSubjectDialog;
-import de.max.notenspiegel.gui.Subject;
+import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.gui.SubjectField;
 
 import android.view.Menu;

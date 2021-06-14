@@ -3,23 +3,25 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginStart="10dp"
-    android:layout_marginLeft="2dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="10dp"
-    android:layout_marginBottom="1dp">
+    android:layout_marginBottom="10dp"
+    android:background="@color/medium_gray"
+    app:barrierMargin="10dp">
 
     <TextView
         android:id="@+id/subjectNameTextView"
         android:layout_width="146dp"
         android:layout_height="34dp"
         android:layout_marginStart="148dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="116dp"
         android:layout_weight="1"
         android:gravity="center|center_horizontal"
         android:text="@string/subject_name"
+        android:textColor="@color/text_light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -32,6 +34,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="max"
+        android:textColor="@color/text_light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,6 +46,7 @@
         android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="percent"
+        android:textColor="@color/text_light_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/maxAmountTextView" />
 </androidx.constraintlayout.widget.ConstraintLayout>

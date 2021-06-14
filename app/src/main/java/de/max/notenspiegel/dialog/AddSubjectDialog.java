@@ -15,7 +15,7 @@ import android.widget.TextView;
 import org.jetbrains.annotations.NotNull;
 
 import de.max.notenspiegel.R;
-import de.max.notenspiegel.gui.Subject;
+import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.main.MainActivity;
 
 public class AddSubjectDialog extends DialogFragment {
