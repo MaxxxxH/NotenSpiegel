@@ -14,26 +14,30 @@ import de.max.notenspiegel.databinding.ActivityMainBinding;
 import de.max.notenspiegel.structure.Subject;
 
 import de.max.notenspiegel.gui.SubjectField;
+import de.max.notenspiegel.util.Util;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String KEY_KEY_NAMES = "keys";
     private ActivityMainBinding binding;
-    private final List<Subject> subjects;
+    private List<Subject> subjects;
+    private Set<String> subjectKeys;
     private LinearLayout linearLayout;
-    private SharedPreferences preferences;
+    private SharedPreferences subjectPreferences;
 
     public MainActivity() {
         this.subjects = new ArrayList<>();
+        subjectKeys = new HashSet<>();
     }
 
     @Override
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button addSubjectButton = findViewById(R.id.addSubjectButton);
         linearLayout = findViewById(R.id.subjectListLayout);
-        preferences = getPreferences(0);
+        subjectPreferences = getSharedPreferences(Subject.PREFERENCES, MODE_PRIVATE);
         addSubjectButton.setOnClickListener((v) -> {
             FragmentManager fm = getSupportFragmentManager();
             AddSubjectDialog dialogFragment = new AddSubjectDialog(this);
@@ -53,16 +57,39 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        addSubject(new Subject("cooler name", 3));
+        loadSubjects();
 
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Util.setKeys(subjectKeys, KEY_KEY_NAMES, subjectPreferences);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Util.setKeys(subjectKeys, KEY_KEY_NAMES, subjectPreferences);
+    }
+
+    private void loadSubjects() {
+        if (subjects == null || subjects.size() <= 0) {
+            List<Subject> newList = Util.loadAll(KEY_KEY_NAMES, subjectPreferences, Subject.class);
+           for (Subject subject: newList){
+               addSubject(subject);
+           }
+        }
     }
 
     public void addSubject(Subject subject) {
         subjects.add(subject);
-        TextView spacer = new TextView(this);
-        spacer.setHeight(2);
-//        linearLayout.addView(new TextView(this));
+        //TextView spacer = new TextView(this);
+        //spacer.setHeight(2);
+        subjectKeys.add(subject.getKey());
+        Util.save(subject, subjectPreferences);
         linearLayout.addView(new SubjectField(this, subject));
+        System.out.println(subject);
     }
 
     @Override

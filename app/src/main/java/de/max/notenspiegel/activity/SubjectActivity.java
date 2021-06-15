@@ -1,5 +1,6 @@
 package de.max.notenspiegel.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import de.max.notenspiegel.gui.PaperField;
 import de.max.notenspiegel.structure.Paper;
 import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.gui.SubjectField;
+import de.max.notenspiegel.util.Util;
 
 public class SubjectActivity extends AppCompatActivity {
     private static final String PAPER_SAVE_KEY = "paper_key";
@@ -29,6 +31,7 @@ public class SubjectActivity extends AppCompatActivity {
     private LinearLayout layout;
     private TextView percentTextView;
     private TextView percentTotalTextView;
+    private SharedPreferences subjectPreferences;
 
     public SubjectActivity() {
     }
@@ -41,7 +44,7 @@ public class SubjectActivity extends AppCompatActivity {
         binding = ActivitySubjectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
-
+        subjectPreferences = getSharedPreferences(Subject.PREFERENCES, MODE_PRIVATE);
         Serializable extra = getIntent().getSerializableExtra(SubjectField.EXTRA_SUBJECT);
         layout = findViewById(R.id.subjectActivityPaperLayout);
 
@@ -50,10 +53,10 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         subject = (Subject) extra;
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         Button addPaperButton = findViewById(R.id.buttonAddPaper);
         percentTextView = findViewById(R.id.subjectPercentTextView);
-        percentTotalTextView=findViewById(R.id.subjectPercentTotalTextView);
+        percentTotalTextView = findViewById(R.id.subjectPercentTotalTextView);
 
         loadPaperFields();
         addPaperButton.setOnClickListener((v) -> {
@@ -68,13 +71,19 @@ public class SubjectActivity extends AppCompatActivity {
     }
 
     public void update() {
-        if(percentTextView==null|| percentTotalTextView==null || subject ==null){
+
+        if (percentTextView == null || percentTotalTextView == null || subject == null) {
             return;
         }
-        percentTextView.setText(subject.getPercent()+ "%");
-        percentTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercent()),this));
-        percentTotalTextView.setText(subject.getPercentTotal()+ "%");
-        percentTotalTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercentTotal()),this));
+        percentTextView.setText(subject.getPercent() + "%");
+        percentTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercent()), this));
+        percentTotalTextView.setText(subject.getPercentTotal() + "%");
+        percentTotalTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercentTotal()), this));
+
+    }
+
+    private void updatePreferences() {
+        Util.save(subject, subjectPreferences);
     }
 
     public int getNext() {
@@ -103,12 +112,14 @@ public class SubjectActivity extends AppCompatActivity {
         subject.addPaper(paper);
         layout.addView(new PaperField(this, paper, subject));
         update();
+        updatePreferences();
     }
 
     public void removePaperField(PaperField paperField) {
         subject.removePaper(paperField.getPaper());
         layout.removeView(paperField);
         update();
+        updatePreferences();
     }
 
     private void loadPaperFields() {

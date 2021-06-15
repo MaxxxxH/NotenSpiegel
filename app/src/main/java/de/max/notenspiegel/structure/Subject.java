@@ -1,6 +1,7 @@
 package de.max.notenspiegel.structure;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Point;
 
@@ -17,11 +18,14 @@ public class Subject implements Serializable {
         INSUFFICIENT, WARN, GOOD
     }
 
-    public static final int WARN_COLOR = R.color.warn_paper;
-    public static final int INSUFFICIENT_COLOR = R.color.insufficient_paper;
-    public static final int GOOD_COLOR = R.color.good_paper;
-    public static final int WARN = 75;
-    public static final int INSUFFICIENT = 50;
+    public static final String PREFERENCES = "pref_subject";
+    private static final String PREFIX_SUBJECT = "subject_";
+    private static final int WARN_COLOR = R.color.warn_paper;
+    private static final int INSUFFICIENT_COLOR = R.color.insufficient_paper;
+    private static final int GOOD_COLOR = R.color.good_paper;
+    private static final int WARN = 75;
+    private static final int INSUFFICIENT = 50;
+    private final String key;
     private final String name;
     private final List<Paper> papers;
     private int maxAmount;
@@ -30,10 +34,12 @@ public class Subject implements Serializable {
     public Subject(String name, int maxAmount) {
         this.maxAmount = maxAmount;
         this.name = name;
+        this.key = PREFIX_SUBJECT + name;
         papers = new ArrayList<>();
+    }
 
-        //@Todo remove test
-        papers.add(new Paper(3, 5, 0));
+    public String getKey() {
+        return key;
     }
 
     public int getMaxAmount() {
@@ -86,7 +92,7 @@ public class Subject implements Serializable {
         if (maxAmount <= 0) {
             return getPercent();
         }
-        if(papers.size()==0){
+        if (papers.size() == 0) {
             return 0;
         }
         Point s = getSum();
@@ -114,7 +120,7 @@ public class Subject implements Serializable {
             case WARN:
                 return context.getColor(R.color.warn_paper);
             default:
-            return context.getColor(R.color.good_paper);
+                return context.getColor(R.color.good_paper);
         }
     }
 
