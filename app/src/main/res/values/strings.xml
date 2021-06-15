@@ -2,6 +2,8 @@
     <string name="action_settings">Settings</string>
 
     <string name="subject_name">Name</string>
+    <string name="paper_proportion">%d\\%d</string>
+    <string name="paper_number">Blatt Nr. %d</string>
     <string name="paper_amount_optional">Anzahl Blätter (optional)</string>
     <string name="app_name">Name</string>
     <string name="confirm">bestätigen</string>
@@ -17,4 +19,8 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_subject">SubjectActivity</string>
+    <string name="add_paper">Blatt hinzufügen</string>
+    <string name="points_reached">"erreichte Punktzahl"</string>
+    <string name="points_total">Maximale Punktzahl</string>
+    <string name="field_empty">%s kann nicht leer sein!</string>
 </resources>

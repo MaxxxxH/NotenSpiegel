@@ -9,7 +9,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import de.max.notenspiegel.R;
-import de.max.notenspiegel.SubjectActivity;
+import de.max.notenspiegel.activity.SubjectActivity;
 import de.max.notenspiegel.structure.Subject;
 
 public class SubjectField extends ConstraintLayout {
@@ -46,6 +46,7 @@ public class SubjectField extends ConstraintLayout {
         nameTextView.setText(subject.getName());
         maxValueTextView.setText(subject.getMaxAmount() + "");
         percentageTextView.setText(subject.getPercent() + "%");
+        percentageTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercent()), getContext()));
     }
 
 }

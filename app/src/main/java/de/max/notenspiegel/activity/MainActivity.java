@@ -1,5 +1,6 @@
-package de.max.notenspiegel.main;
+package de.max.notenspiegel.activity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,15 +8,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 import de.max.notenspiegel.R;
-import de.max.notenspiegel.databinding.ActivityMainBinding;
+
 import de.max.notenspiegel.dialog.AddSubjectDialog;
+import de.max.notenspiegel.databinding.ActivityMainBinding;
 import de.max.notenspiegel.structure.Subject;
+
 import de.max.notenspiegel.gui.SubjectField;
 
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private final List<Subject> subjects;
     private LinearLayout linearLayout;
+    private SharedPreferences preferences;
 
     public MainActivity() {
         this.subjects = new ArrayList<>();
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button addSubjectButton = findViewById(R.id.addSubjectButton);
         linearLayout = findViewById(R.id.subjectListLayout);
-
+        preferences = getPreferences(0);
         addSubjectButton.setOnClickListener((v) -> {
             FragmentManager fm = getSupportFragmentManager();
             AddSubjectDialog dialogFragment = new AddSubjectDialog(this);
@@ -53,6 +59,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void addSubject(Subject subject) {
         subjects.add(subject);
+        TextView spacer = new TextView(this);
+        spacer.setHeight(2);
+//        linearLayout.addView(new TextView(this));
         linearLayout.addView(new SubjectField(this, subject));
     }
 

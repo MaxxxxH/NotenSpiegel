@@ -25,7 +25,7 @@
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:foregroundTint="#9BACC3"
+            android:background="@color/medium_gray"
             android:gravity="center"
             android:text="@string/subject_name"
             android:textColor="@color/text_light_gray" />
@@ -75,6 +75,7 @@
             android:id="@+id/TextView5"
             android:layout_width="200dp"
             android:layout_height="match_parent"
+            android:background="@color/medium_gray"
             android:gravity="center"
             android:text="@string/paper_amount_optional"
             android:textColor="@color/text_light_gray" />

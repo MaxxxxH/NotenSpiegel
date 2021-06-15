@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import de.max.notenspiegel.R;
 import de.max.notenspiegel.structure.Subject;
-import de.max.notenspiegel.main.MainActivity;
+import de.max.notenspiegel.activity.MainActivity;
 
 public class AddSubjectDialog extends DialogFragment {
     private final MainActivity mainActivity;
@@ -35,7 +35,7 @@ public class AddSubjectDialog extends DialogFragment {
     @org.jetbrains.annotations.Nullable
     @Override
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.activity_add_subject_dialog, container);
+        return inflater.inflate(R.layout.add_subject_dialog, container);
     }
 
     @Override
@@ -51,8 +51,7 @@ public class AddSubjectDialog extends DialogFragment {
                 return;
             }
             int maxAmount = getValue(maxAmountTextView);
-            Subject subject = new Subject(nameTextView.getText().toString(), maxAmount >= 0 ? maxAmount : 6);
-
+            Subject subject = new Subject(nameTextView.getText().toString(), maxAmount >= 0 ? maxAmount : 0);
             mainActivity.addSubject(subject);
             getDialog().cancel();
         });

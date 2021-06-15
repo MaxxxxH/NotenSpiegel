@@ -12,4 +12,7 @@
     <color name="button_blue">#7289DA</color>
     <color name="text_light_gray">#99AAB5</color>
     <color name="medium_gray">#40444B</color>
+    <color name="good_paper">#7DD63D</color>
+    <color name="warn_paper">#D6C31A</color>
+    <color name="insufficient_paper">#FF1313</color>
 </resources>

@@ -10,11 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NotenSpiegel">
         <activity
-            android:name=".SubjectActivity"
+            android:name=".activity.SubjectActivity"
             android:label="@string/title_activity_subject"
             android:theme="@style/Theme.NotenSpiegel.NoActionBar"></activity>
         <activity
-            android:name=".main.MainActivity"
+            android:name=".activity.MainActivity"
             android:label="NotenSpiegel"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.NotenSpiegel.NoActionBar">
