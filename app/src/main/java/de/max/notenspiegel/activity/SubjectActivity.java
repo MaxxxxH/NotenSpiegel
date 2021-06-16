@@ -1,11 +1,13 @@
 package de.max.notenspiegel.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.view.Gravity;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,6 +27,7 @@ import de.max.notenspiegel.gui.SubjectField;
 import de.max.notenspiegel.util.Util;
 
 public class SubjectActivity extends AppCompatActivity {
+    public static final String DELETE_SUBJECT = "delete_subject_extra";
     private static final String PAPER_SAVE_KEY = "paper_key";
     private ActivitySubjectBinding binding;
     private Subject subject;
@@ -44,15 +47,19 @@ public class SubjectActivity extends AppCompatActivity {
         binding = ActivitySubjectBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         setSupportActionBar(binding.toolbar);
+
         subjectPreferences = getSharedPreferences(Subject.PREFERENCES, MODE_PRIVATE);
-        Serializable extra = getIntent().getSerializableExtra(SubjectField.EXTRA_SUBJECT);
+        String extraKey = getIntent().getStringExtra(SubjectField.EXTRA_SUBJECT);
         layout = findViewById(R.id.subjectActivityPaperLayout);
 
-        if (!(extra instanceof Subject)) {
+        if (extraKey == null) {
             return;
         }
 
-        subject = (Subject) extra;
+        subject = Util.load(extraKey, subjectPreferences, Subject.class);
+        if(subject == null){
+            return;
+        }
         Toolbar toolbar = findViewById(R.id.toolbar);
         Button addPaperButton = findViewById(R.id.buttonAddPaper);
         percentTextView = findViewById(R.id.subjectPercentTextView);
@@ -64,9 +71,16 @@ public class SubjectActivity extends AppCompatActivity {
             AddPaperDialog dialogFragment = new AddPaperDialog(this);
             dialogFragment.show(fm, "fragment_edit_name");
         });
+        findViewById(R.id.subjectDeleteImageButton).setOnClickListener((v) -> {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(DELETE_SUBJECT, this.subject);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            this.startActivity(intent);
+        });
         setSupportActionBar(toolbar);
         toolbar.setTitle(subject.getName());
         update();
+        System.out.println("create end");
 
     }
 
@@ -82,30 +96,17 @@ public class SubjectActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
     private void updatePreferences() {
         Util.save(subject, subjectPreferences);
     }
 
     public int getNext() {
         return subject.getNextNumber();
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        if (savedInstanceState == null || !(savedInstanceState.getSerializable(PAPER_SAVE_KEY) instanceof Subject)) {
-            return;
-        }
-
-        subject = (Subject) savedInstanceState.getSerializable(PAPER_SAVE_KEY);
-        loadPaperFields();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        System.out.println("save");
-        outState.putSerializable(PAPER_SAVE_KEY, (Serializable) subject);
-        System.out.println("save" + outState.getSerializable(PAPER_SAVE_KEY));
-        super.onSaveInstanceState(outState);
     }
 
     public void addPaper(Paper paper) {

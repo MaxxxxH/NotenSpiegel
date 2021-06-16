@@ -5,7 +5,7 @@
     <string name="paper_proportion">%d\\%d</string>
     <string name="paper_number">Blatt Nr. %d</string>
     <string name="paper_amount_optional">Anzahl Blätter (optional)</string>
-    <string name="app_name">Name</string>
+    <string name="app_name">NotenSpiegel</string>
     <string name="confirm">bestätigen</string>
     <string name="cancel">abbrechen</string>
     <string name="add_subject">Fach hinzufügen</string>
@@ -15,6 +15,8 @@
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="error_identifier_not_unique">Bitte wähle einen eindeutigen Namen! (Name bereits verwendet!)</string>
+    <string name="error_invalid_name">Ungültiger Name!</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -23,4 +25,7 @@
     <string name="points_reached">"erreichte Punktzahl"</string>
     <string name="points_total">Maximale Punktzahl</string>
     <string name="field_empty">%s kann nicht leer sein!</string>
+    <string name="title_activity_splash_screen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

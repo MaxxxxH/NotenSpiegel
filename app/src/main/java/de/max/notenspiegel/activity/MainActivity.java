@@ -9,8 +9,8 @@ import androidx.fragment.app.FragmentManager;
 
 import de.max.notenspiegel.R;
 
-import de.max.notenspiegel.dialog.AddSubjectDialog;
 import de.max.notenspiegel.databinding.ActivityMainBinding;
+import de.max.notenspiegel.dialog.AddSubjectDialog;
 import de.max.notenspiegel.structure.Subject;
 
 import de.max.notenspiegel.gui.SubjectField;
@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
 
         Button addSubjectButton = findViewById(R.id.addSubjectButton);
+
         linearLayout = findViewById(R.id.subjectListLayout);
         subjectPreferences = getSharedPreferences(Subject.PREFERENCES, MODE_PRIVATE);
         addSubjectButton.setOnClickListener((v) -> {
@@ -55,10 +57,26 @@ public class MainActivity extends AppCompatActivity {
             AddSubjectDialog dialogFragment = new AddSubjectDialog(this);
             dialogFragment.show(fm, "fragment_edit_name");
         });
+        if (getIntent().hasExtra(SubjectActivity.DELETE_SUBJECT)) {
 
+            Serializable serializable = getIntent().getSerializableExtra(SubjectActivity.DELETE_SUBJECT);
+            System.out.println("has delete subject " + serializable);
+            removeSubject((Subject) serializable);
+        }
 
+    }
+
+    private void updateView() {
+        linearLayout.removeAllViews();
+        for (Subject subject : subjects) {
+            linearLayout.addView(new SubjectField(this, subject));
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         loadSubjects();
-
     }
 
     @Override
@@ -74,22 +92,45 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadSubjects() {
-        if (subjects == null || subjects.size() <= 0) {
-            List<Subject> newList = Util.loadAll(KEY_KEY_NAMES, subjectPreferences, Subject.class);
-           for (Subject subject: newList){
-               addSubject(subject);
-           }
+
+        List<Subject> newList = Util.loadAll(KEY_KEY_NAMES, subjectPreferences, Subject.class);
+        subjects.clear();
+        subjectKeys.clear();
+        for (Subject subject : newList) {
+            addSubject(subject);
         }
+        updateView();
     }
 
     public void addSubject(Subject subject) {
         subjects.add(subject);
-        //TextView spacer = new TextView(this);
-        //spacer.setHeight(2);
         subjectKeys.add(subject.getKey());
         Util.save(subject, subjectPreferences);
         linearLayout.addView(new SubjectField(this, subject));
         System.out.println(subject);
+    }
+
+    public void removeSubject(Subject subject) {
+        subjects.remove(subject);
+        subjectKeys.remove(subject.getKey());
+        SharedPreferences.Editor edit = subjectPreferences.edit();
+        edit.remove(subject.getKey());
+        edit.apply();
+        updateView();
+        System.out.println("removed" + subject);
+
+    }
+
+    public boolean isNewIdentifier(String name) {
+        if (name == null) {
+            return false;
+        }
+        for (Subject subject : subjects) {
+            if (name.equals(subject.getName())) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

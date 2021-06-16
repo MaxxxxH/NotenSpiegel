@@ -1,6 +1,8 @@
 package de.max.notenspiegel.gui;
 
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,6 +11,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import de.max.notenspiegel.R;
+import de.max.notenspiegel.activity.MainActivity;
 import de.max.notenspiegel.activity.SubjectActivity;
 import de.max.notenspiegel.structure.Subject;
 
@@ -35,10 +38,13 @@ public class SubjectField extends ConstraintLayout {
 
         this.setOnClickListener((v) -> {
             Intent intent = new Intent(context, SubjectActivity.class);
-            intent.putExtra(EXTRA_SUBJECT, this.subject);
+            intent.putExtra(EXTRA_SUBJECT, this.subject.getKey());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(intent);
-        });
+            if(context instanceof Activity) {
+                ((Activity) context).overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_out_right);
+            }
+            });
         update();
     }
 

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -50,8 +51,17 @@ public class AddSubjectDialog extends DialogFragment {
             if (mainActivity == null) {
                 return;
             }
+            String identifier = nameTextView.getText().toString();
+            if (!mainActivity.isNewIdentifier(identifier)) {
+                Toast.makeText(mainActivity, R.string.error_identifier_not_unique, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (identifier.isEmpty()) {
+                Toast.makeText(mainActivity,R.string.error_invalid_name, Toast.LENGTH_SHORT).show();
+                return;
+            }
             int maxAmount = getValue(maxAmountTextView);
-            Subject subject = new Subject(nameTextView.getText().toString(), maxAmount >= 0 ? maxAmount : 0);
+            Subject subject = new Subject(identifier, maxAmount >= 0 ? maxAmount : 0);
             mainActivity.addSubject(subject);
             getDialog().cancel();
         });

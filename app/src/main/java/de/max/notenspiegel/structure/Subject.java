@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import de.max.notenspiegel.R;
 
@@ -122,6 +123,21 @@ public class Subject implements Serializable {
             default:
                 return context.getColor(R.color.good_paper);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o){
+            return true;
+        }
+        if (!(o instanceof Subject)) return false;
+        Subject subject = (Subject) o;
+        return key.equals(subject.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key);
     }
 
     @Override

@@ -11,7 +11,7 @@
         android:id="@+id/subjectPercentTotalTextView"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="5dp"
         android:background="@color/medium_gray"
         android:gravity="center"
@@ -57,7 +57,7 @@
         android:id="@+id/subjectPercentTextView"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:background="@color/medium_gray"
         android:gravity="center"
@@ -65,5 +65,16 @@
         android:textColor="@color/text_light_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <ImageButton
+        android:id="@+id/subjectDeleteImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/dark_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

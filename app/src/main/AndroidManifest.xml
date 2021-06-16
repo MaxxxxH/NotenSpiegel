@@ -10,19 +10,29 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.NotenSpiegel">
         <activity
-            android:name=".activity.SubjectActivity"
-            android:label="@string/title_activity_subject"
-            android:theme="@style/Theme.NotenSpiegel.NoActionBar"></activity>
-        <activity
-            android:name=".activity.MainActivity"
-            android:label="NotenSpiegel"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.NotenSpiegel.NoActionBar">
+            android:name=".activity.SplashScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash_screen"
+            android:theme="@style/Theme.NotenSpiegel.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".activity.SubjectActivity"
+            android:label="@string/title_activity_subject"
+            android:theme="@style/Theme.NotenSpiegel.NoActionBar" />
+        <activity
+            android:name=".activity.MainActivity"
+            android:label="NotenSpiegel"
+            android:theme="@style/Theme.NotenSpiegel.NoActionBar">
+           <!-- <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" /
+            </intent-filter>-->
         </activity>
     </application>
 
