@@ -41,10 +41,10 @@ public class SubjectField extends ConstraintLayout {
             intent.putExtra(EXTRA_SUBJECT, this.subject.getKey());
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             context.startActivity(intent);
-            if(context instanceof Activity) {
-                ((Activity) context).overridePendingTransition(android.R.anim.slide_out_right, android.R.anim.slide_out_right);
+            if (context instanceof Activity) {
+                ((Activity) context).overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
-            });
+        });
         update();
     }
 

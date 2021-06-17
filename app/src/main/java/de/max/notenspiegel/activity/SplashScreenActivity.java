@@ -11,7 +11,6 @@ import android.view.animation.Animation;
 
 import java.util.Objects;
 
-import de.max.notenspiegel.BuildConfig;
 import de.max.notenspiegel.databinding.ActivitySplashScreenBinding;
 
 

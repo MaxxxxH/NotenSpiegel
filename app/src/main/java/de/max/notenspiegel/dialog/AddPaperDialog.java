@@ -60,7 +60,6 @@ public class AddPaperDialog extends DialogFragment {
                 return;
             }
             int maxValue = getValue(maxTextView);
-            Toast.makeText(view.getContext(), getString(R.string.field_empty, "Punktzahl"), Toast.LENGTH_SHORT).show();
 
             if (maxValue < 1) {
                 Toast.makeText(view.getContext(), R.string.error_max_value_smaller_than_one, Toast.LENGTH_SHORT).show();
