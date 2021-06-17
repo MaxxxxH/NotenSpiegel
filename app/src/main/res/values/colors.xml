@@ -7,17 +7,20 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="TaskBarBlack">#202023</color>
-    <color name="dark_gray">#2F3136</color>
-    <color name="button_blue">#7289DA</color>
-    <color name="text_light_gray">#99AAB5</color>
+
     <color name="medium_gray">#40444B</color>
-    <color name="good_paper">#7DD63D</color>
-    <color name="warn_paper">#D6C31A</color>
-    <color name="insufficient_paper">#FF1313</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="light_blue_900">#FF01579B</color>
     <color name="light_blue_A200">#FF40C4FF</color>
     <color name="light_blue_A400">#FF00B0FF</color>
     <color name="black_overlay">#66000000</color>
+
+    <color name="insufficient_paper">#FF1313</color>
+    <color name="good_paper">#7DD63D</color>
+    <color name="warn_paper">#D6C31A</color>
+
+    <color name="button_blue">#7289DA</color>
+    <color name="taskbar_black">#202023</color>
+    <color name="text_light_gray">#99AAB5</color>
+    <color name="dark_gray">#2F3136</color>
 </resources>

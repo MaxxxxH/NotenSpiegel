@@ -17,7 +17,7 @@
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/TaskBarBlack"
+            android:background="@color/taskbar_black"
             app:popupTheme="@style/Theme.NotenSpiegel.PopupOverlay"
             app:titleTextColor="@color/text_light_gray" />
 

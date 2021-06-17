@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/TaskBarBlack"
+    android:background="@color/taskbar_black"
     android:theme="@style/ThemeOverlay.NotenSpiegel.FullscreenContainer"
     tools:context=".activity.SplashScreenActivity">
 
@@ -17,7 +17,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#6C6C8E"
+        android:background="@drawable/splashscreen"
         android:fitsSystemWindows="true">
 
         <TextView
@@ -26,7 +26,6 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="Max H."
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -35,14 +34,12 @@
             android:id="@+id/textView2"
             android:layout_width="313dp"
             android:layout_height="83dp"
-            android:layout_marginStart="112dp"
-            android:layout_marginTop="274dp"
-            android:layout_marginEnd="54dp"
-            android:layout_marginBottom="377dp"
+            android:layout_marginTop="233dp"
+            android:layout_marginBottom="415dp"
             android:gravity="center"
             android:rotation="-8"
             android:text="@string/app_name"
-            android:textColor="#00F847"
+            android:textColor="#FFFFFF"
             android:textColorHighlight="#9E3030"
             android:textColorHint="#873B3B"
             android:textSize="48sp"

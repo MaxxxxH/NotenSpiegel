@@ -36,7 +36,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             thisActivity.startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
-        }, BuildConfig.DEBUG ? 250 : 2000);
+        },2000);// BuildConfig.DEBUG ? 250 : 2000);
     }
 
     @Override

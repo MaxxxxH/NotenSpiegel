@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="@color/TaskBarBlack"
+            android:background="@color/taskbar_black"
             android:gravity="center"
             app:popupTheme="@style/Theme.NotenSpiegel.PopupOverlay"
             app:titleTextColor="@color/text_light_gray" />

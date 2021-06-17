@@ -54,12 +54,19 @@ public class AddPaperDialog extends DialogFragment {
             }
             String maxPointText = maxTextView.getText().toString();
             String reachedPointText = pointTextView.getText().toString();
-            System.out.println(maxPointText+ "re"+ reachedPointText);
+            System.out.println(maxPointText + "re" + reachedPointText);
             if (maxPointText.isEmpty() || reachedPointText.isEmpty()) {
                 Toast.makeText(view.getContext(), getString(R.string.field_empty, "Punktzahl"), Toast.LENGTH_SHORT).show();
                 return;
             }
-            Paper paper=new Paper(getValue(pointTextView),getValue(maxTextView), subjectActivity.getNext());
+            int maxValue = getValue(maxTextView);
+            Toast.makeText(view.getContext(), getString(R.string.field_empty, "Punktzahl"), Toast.LENGTH_SHORT).show();
+
+            if (maxValue < 1) {
+                Toast.makeText(view.getContext(), R.string.error_max_value_smaller_than_one, Toast.LENGTH_SHORT).show();
+                return;
+            }
+            Paper paper = new Paper(getValue(pointTextView), getValue(maxTextView), subjectActivity.getNext());
             subjectActivity.addPaper(paper);
             getDialog().cancel();
 
