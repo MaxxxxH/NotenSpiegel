@@ -2,7 +2,6 @@ package de.max.notenspiegel.gui;
 
 
 import android.app.Activity;
-import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -11,8 +10,8 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import de.max.notenspiegel.R;
-import de.max.notenspiegel.activity.MainActivity;
 import de.max.notenspiegel.activity.SubjectActivity;
+import de.max.notenspiegel.structure.Setting;
 import de.max.notenspiegel.structure.Subject;
 
 public class SubjectField extends ConstraintLayout {
@@ -23,14 +22,14 @@ public class SubjectField extends ConstraintLayout {
     private final TextView percentageTextView;
 
     public SubjectField(Context context) {
-        this(context, new Subject("", 6));
+        this(context, new Subject("", 6, Setting.DEFAULT));
     }
 
     public SubjectField(Context context, Subject subject) {
         super(context);
         this.subject = subject;
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.subject_field, this, true);
+        inflater.inflate(R.layout.subject_field_name, this, true);
 
         this.nameTextView = findViewById(R.id.subjectNameTextView);
         this.maxValueTextView = findViewById(R.id.maxAmountTextView);
@@ -52,7 +51,7 @@ public class SubjectField extends ConstraintLayout {
         nameTextView.setText(subject.getName());
         maxValueTextView.setText(subject.getMaxAmount() + "");
         percentageTextView.setText(subject.getPercent() + "%");
-        percentageTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercent()), getContext()));
+        percentageTextView.setTextColor(subject.warnColor(subject.getPercent()).getColor( getContext()));
     }
 
 }

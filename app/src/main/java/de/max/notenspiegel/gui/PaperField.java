@@ -17,15 +17,18 @@ import de.max.notenspiegel.activity.SubjectActivity;
 import de.max.notenspiegel.structure.Paper;
 import de.max.notenspiegel.structure.Subject;
 
+/**
+ * An display Slot of paper object.
+ *
+ * @author Max Hecht
+ * @version 1.0
+ */
 public class PaperField extends ConstraintLayout {
-    private static final String PAPER_NUMBER = "paper n.%d";
     private final Paper paper;
     private final Subject mother;
-    private int number;
     private final TextView paperNumberTextView;
     private final TextView percentTextView;
     private final TextView proportionTextView;
-    private Resources resources;
 
     public PaperField(Context context) {
         this(context, null, null);
@@ -35,7 +38,7 @@ public class PaperField extends ConstraintLayout {
         super(context);
 
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.paper_layout, this, true);
+        inflater.inflate(R.layout.paper_field_layout, this, true);
 
         this.paper = paper;
         this.mother = mother;
@@ -58,7 +61,7 @@ public class PaperField extends ConstraintLayout {
         paperNumberTextView.setText(String.format(getResources().getString(R.string.paper_number), paper.getNumber()));
         System.out.println(getResources().getString(R.string.paper_number));
         percentTextView.setText(paper.getPercent() + "%");
-        percentTextView.setTextColor(Subject.getColor(mother.warnColor(paper.getPercent()), getContext()));
+        percentTextView.setTextColor(mother.warnColor(paper.getPercent()).getColor( getContext()));
         proportionTextView.setText(String.format(getResources().getString(R.string.paper_proportion), paper.getActualPoints(), paper.getMaxPoint()));
 
     }

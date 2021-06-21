@@ -8,6 +8,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -22,6 +24,7 @@ import de.max.notenspiegel.databinding.ActivitySubjectBinding;
 import de.max.notenspiegel.dialog.AddPaperDialog;
 import de.max.notenspiegel.gui.PaperField;
 import de.max.notenspiegel.structure.Paper;
+import de.max.notenspiegel.structure.Setting;
 import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.gui.SubjectField;
 import de.max.notenspiegel.util.Util;
@@ -57,7 +60,7 @@ public class SubjectActivity extends AppCompatActivity {
         }
 
         subject = Util.load(extraKey, subjectPreferences, Subject.class);
-        if(subject == null){
+        if (subject == null) {
             return;
         }
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -89,10 +92,10 @@ public class SubjectActivity extends AppCompatActivity {
         if (percentTextView == null || percentTotalTextView == null || subject == null) {
             return;
         }
-        percentTextView.setText(subject.getPercent() + "%");
-        percentTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercent()), this));
-        percentTotalTextView.setText(subject.getPercentTotal() + "%");
-        percentTotalTextView.setTextColor(Subject.getColor(subject.warnColor(subject.getPercentTotal()), this));
+        percentTextView.setText(" " + subject.getPercent() + "% ");
+        percentTextView.setTextColor(subject.warnColor(subject.getPercent()).getColor(this));
+        percentTotalTextView.setText(" " + subject.getPercentTotal() + "% ");
+        percentTotalTextView.setTextColor(subject.warnColor(subject.getPercentTotal()).getColor(this));
 
     }
 
@@ -129,5 +132,26 @@ public class SubjectActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SubjectSettingsActivity.class);
+            intent.putExtra(SubjectSettingsActivity.SUBJECT_SETTING,
+                   subject);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

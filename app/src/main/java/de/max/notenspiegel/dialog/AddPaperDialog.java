@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import de.max.notenspiegel.R;
 import de.max.notenspiegel.activity.SubjectActivity;
 import de.max.notenspiegel.structure.Paper;
-import de.max.notenspiegel.structure.Subject;
 
 public class AddPaperDialog extends DialogFragment {
     private final SubjectActivity subjectActivity;

@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,11 +19,14 @@ import android.widget.Toast;
 import org.jetbrains.annotations.NotNull;
 
 import de.max.notenspiegel.R;
+import de.max.notenspiegel.structure.Setting;
 import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.activity.MainActivity;
+import de.max.notenspiegel.util.Util;
 
 public class AddSubjectDialog extends DialogFragment {
     private final MainActivity mainActivity;
+    private SharedPreferences preferences;
 
     public AddSubjectDialog() {
         super();
@@ -30,6 +36,7 @@ public class AddSubjectDialog extends DialogFragment {
     public AddSubjectDialog(MainActivity mainActivity) {
         super();
         this.mainActivity = mainActivity;
+
     }
 
     @Nullable
@@ -39,6 +46,7 @@ public class AddSubjectDialog extends DialogFragment {
         return inflater.inflate(R.layout.add_subject_dialog, container);
     }
 
+
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -47,6 +55,8 @@ public class AddSubjectDialog extends DialogFragment {
         Button cancel = view.findViewById(R.id.dialogCancelButton);
         TextView nameTextView = view.findViewById(R.id.addSubjectDialogName);
         EditText maxAmountTextView = view.findViewById(R.id.addSubjectDialogNumber);
+        Setting defaultSettings = Setting.getDefaultSettings(view.getContext());
+        maxAmountTextView.setText("" + defaultSettings.getMaxPaper());
         apply.setOnClickListener((v) -> {
             if (mainActivity == null) {
                 return;
@@ -57,11 +67,14 @@ public class AddSubjectDialog extends DialogFragment {
                 return;
             }
             if (identifier.isEmpty()) {
-                Toast.makeText(mainActivity,R.string.error_invalid_name, Toast.LENGTH_SHORT).show();
+                Toast.makeText(mainActivity, R.string.error_invalid_name, Toast.LENGTH_SHORT).show();
                 return;
             }
             int maxAmount = getValue(maxAmountTextView);
-            Subject subject = new Subject(identifier, maxAmount >= 0 ? maxAmount : 0);
+            defaultSettings.setName(identifier);
+            defaultSettings.setMaxPaper(maxAmount >= 0 ? maxAmount : 0);
+            Subject subject = new Subject(identifier, defaultSettings.getMaxPaper(), defaultSettings);
+
             mainActivity.addSubject(subject);
             getDialog().cancel();
         });

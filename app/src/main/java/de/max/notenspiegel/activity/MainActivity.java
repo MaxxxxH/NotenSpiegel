@@ -1,5 +1,6 @@
 package de.max.notenspiegel.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,6 +12,8 @@ import de.max.notenspiegel.R;
 
 import de.max.notenspiegel.databinding.ActivityMainBinding;
 import de.max.notenspiegel.dialog.AddSubjectDialog;
+import de.max.notenspiegel.gui.SettingField;
+import de.max.notenspiegel.structure.Setting;
 import de.max.notenspiegel.structure.Subject;
 
 import de.max.notenspiegel.gui.SubjectField;
@@ -62,6 +65,9 @@ public class MainActivity extends AppCompatActivity {
             Serializable serializable = getIntent().getSerializableExtra(SubjectActivity.DELETE_SUBJECT);
             System.out.println("has delete subject " + serializable);
             removeSubject((Subject) serializable);
+        } else if (getIntent().hasExtra(SubjectSettingsActivity.DEFAULT_SETTING)) {
+            Serializable serializable = getIntent().getSerializableExtra(SubjectSettingsActivity.DEFAULT_SETTING);
+            System.out.println("extra " + serializable);
         }
 
     }
@@ -107,7 +113,6 @@ public class MainActivity extends AppCompatActivity {
         subjectKeys.add(subject.getKey());
         Util.save(subject, subjectPreferences);
         linearLayout.addView(new SubjectField(this, subject));
-        System.out.println(subject);
     }
 
     public void removeSubject(Subject subject) {
@@ -146,6 +151,25 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SubjectSettingsActivity.class);
+            intent.putExtra(SubjectSettingsActivity.DEFAULT_SETTING,
+                    Setting.getDefaultSettings(this));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            startActivity(intent);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            return true;
+        }
+        if (id == R.id.reload) {
+            for (Subject subject : subjects) {
+                if (subject.getSetting() == null) {
+                    subject.setSetting(Setting.getDefaultSettings(this));
+
+                }
+                subject.synchroniseSetting();
+                Util.save(subject, subject.getKey(), subjectPreferences);
+            }
+            loadSubjects();
             return true;
         }
 

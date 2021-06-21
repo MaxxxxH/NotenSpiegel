@@ -2,21 +2,23 @@
     <string name="action_settings">Settings</string>
 
     <string name="subject_name">Name</string>
-    <string name="paper_proportion">%d\\%d</string>
+    <string name="paper_proportion">%1d\\%2d</string>
     <string name="paper_number">Blatt Nr. %d</string>
     <string name="paper_amount_optional">Anzahl Blätter (optional)</string>
+
     <string name="app_name">NotenSPIEGEL</string>
     <string name="confirm">bestätigen</string>
     <string name="cancel">abbrechen</string>
     <string name="add_subject">Fach hinzufügen</string>
     <string name="title_activity_subject_field">subjectField</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
 
     <string name="error_identifier_not_unique">Bitte wähle einen eindeutigen Namen! (Name bereits verwendet!)</string>
     <string name="error_invalid_name">Ungültiger Name!</string>
     <string name="error_max_value_smaller_than_one">Die Punktzahl muss mindestens eins sein!</string>
+    <string name="error_max_paper_smaller_than_zero">Die Papierzahl darf nicht kleiner als null sein!</string>
+    <string name="error_value_smaller_than_one">%s muss mindestens eins sein!</string>
+    <string name="error_max_value_invalid">%s ist ungültig! (0\-100 aussreichend &lt; gut)</string>
+    <string name="field_empty">%s kann nicht leer sein!</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
@@ -24,24 +26,13 @@
     <string name="add_paper">Blatt hinzufügen</string>
     <string name="points_reached">"erreichte Punktzahl"</string>
     <string name="points_total">Maximale Punktzahl</string>
-    <string name="field_empty">%s kann nicht leer sein!</string>
+
     <string name="title_activity_splash_screen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="title_activity_subject_settings">SubjectSettingsActivity</string>
+    <string name="title_activity_subject_settings">Settings</string>
+    <string name="good_max_number">Kleinster guter Wert</string>
+    <string name="good_medium_number">Kleinster ausreichender Wert</string>
 
-    <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
-
-    <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
-
-    <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
     <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="reload">Reload</string>
+    <string name="paper_amount">Anzahl Blätter</string>
 </resources>

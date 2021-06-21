@@ -2,12 +2,9 @@ package de.max.notenspiegel.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.ActivityOptions;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.animation.Animation;
 
 import java.util.Objects;
 
@@ -35,7 +32,7 @@ public class SplashScreenActivity extends AppCompatActivity {
             thisActivity.startActivity(intent);
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             finish();
-        },2000);// BuildConfig.DEBUG ? 250 : 2000);
+        }, 2000);// BuildConfig.DEBUG ? 250 : 2000);
     }
 
     @Override

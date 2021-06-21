@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Point;
 
 
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,28 +14,40 @@ import java.util.Objects;
 import de.max.notenspiegel.R;
 
 public class Subject implements Serializable {
+
     public enum Warn {
-        INSUFFICIENT, WARN, GOOD
+        INSUFFICIENT, WARN, GOOD;
+
+        public int getColor(Context context) {
+            switch (this) {
+                case INSUFFICIENT:
+                    return context.getColor(R.color.insufficient_paper);
+                case WARN:
+                    return context.getColor(R.color.warn_paper);
+                default:
+                    return context.getColor(R.color.good_paper);
+            }
+
+        }
     }
 
     public static final String PREFERENCES = "pref_subject";
     private static final String PREFIX_SUBJECT = "subject_";
-    private static final int WARN_COLOR = R.color.warn_paper;
-    private static final int INSUFFICIENT_COLOR = R.color.insufficient_paper;
-    private static final int GOOD_COLOR = R.color.good_paper;
-    private static final int WARN = 75;
-    private static final int INSUFFICIENT = 50;
+    private static final int GOOD = 75;
+    private static final int SUFFICIENT = 50;
     private final String key;
     private final String name;
     private final List<Paper> papers;
+    private Setting setting;
     private int maxAmount;
     private int nextNumber;
 
-    public Subject(String name, int maxAmount) {
+    public Subject(String name, int maxAmount, Setting setting) {
         this.maxAmount = maxAmount;
         this.name = name;
         this.key = PREFIX_SUBJECT + name;
         papers = new ArrayList<>();
+        this.setting = setting;
     }
 
     public String getKey() {
@@ -41,7 +55,7 @@ public class Subject implements Serializable {
     }
 
     public int getMaxAmount() {
-        return maxAmount <= 0 ? papers.size() : maxAmount;
+        return setting.getMaxPaper() <= 0 ? papers.size() : setting.getMaxPaper();
     }
 
     public Iterable<Paper> getIterablePapers() {
@@ -53,7 +67,7 @@ public class Subject implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return setting.getName();
     }
 
     public void addPaper(Paper paper) {
@@ -87,7 +101,7 @@ public class Subject implements Serializable {
     }
 
     public int getPercentTotal() {
-        if (maxAmount <= 0) {
+        if (getMaxAmount() <= 0) {
             return getPercent();
         }
         if (papers.size() == 0) {
@@ -96,35 +110,25 @@ public class Subject implements Serializable {
         Point s = getSum();
         int sum = s.x;
         int sumMax = s.y;
-        sumMax *= maxAmount;
+        sumMax *= getMaxAmount();
         sumMax /= papers.size();
         return sum * 100 / sumMax;
     }
 
     public Warn warnColor(int value) {
-        if (value < INSUFFICIENT) {
+        if (value < (setting != null ? setting.getSufficient() : SUFFICIENT)) {
             return Warn.INSUFFICIENT;
-        } else if (value < WARN) {
+        } else if (value < (setting != null ? setting.getGood() : GOOD)) {
             return Warn.WARN;
         } else {
             return Warn.GOOD;
         }
     }
 
-    public static int getColor(Warn warn, Context context) {
-        switch (warn) {
-            case INSUFFICIENT:
-                return context.getColor(R.color.insufficient_paper);
-            case WARN:
-                return context.getColor(R.color.warn_paper);
-            default:
-                return context.getColor(R.color.good_paper);
-        }
-    }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o){
+        if (this == o) {
             return true;
         }
         if (!(o instanceof Subject)) return false;
@@ -138,11 +142,27 @@ public class Subject implements Serializable {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "Subject{" +
                 "name='" + name + '\'' +
                 ", papers=" + papers +
                 ", maxAmount=" + maxAmount +
+                setting +
                 '}';
+    }
+
+    public void setSetting(Setting setting) {
+        this.setting = setting;
+    }
+
+    public void synchroniseSetting() {
+        if (setting.getName().isEmpty())
+            setting.setName(this.name);
+        if (setting.getMaxPaper() <= 0)
+            setting.setMaxPaper(this.maxAmount);
+    }
+
+    public Setting getSetting() {
+        return setting;
     }
 }

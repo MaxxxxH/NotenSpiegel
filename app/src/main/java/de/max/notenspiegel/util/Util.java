@@ -1,6 +1,8 @@
 package de.max.notenspiegel.util;
 
 import android.content.SharedPreferences;
+import android.os.Looper;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -12,6 +14,8 @@ import java.util.Set;
 import de.max.notenspiegel.structure.Subject;
 
 public final class Util {
+    private static final String PREFIX = "NotenSPIEGEL";
+
     private Util() {
     }
 
@@ -20,7 +24,7 @@ public final class Util {
     }
 
     public static void setKeys(List<String> keys, String key, SharedPreferences preferences) {
-        setKeys( new HashSet<>(keys), key, preferences);
+        setKeys(new HashSet<>(keys), key, preferences);
     }
 
     public static void setKeys(Set<String> keys, String key, SharedPreferences preferences) {
@@ -64,5 +68,15 @@ public final class Util {
     public static <T> T fromJson(String json, Class<T> tClass) {
         Gson gson = new Gson();
         return gson.fromJson(json, tClass);
+    }
+
+    public static void error(String tag, String message, int n) {
+        for (int i = 0; i < n; i++) {
+            Log.println(Log.ERROR, tag, message);
+        }
+    }
+
+    public static void error(String message, int n) {
+        error(PREFIX, message, n);
     }
 }
