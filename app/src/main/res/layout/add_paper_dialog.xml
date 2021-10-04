@@ -24,7 +24,7 @@
             android:background="@color/medium_gray"
             android:gravity="center"
             android:text="@string/points_total"
-            android:textColor="@color/text_light_gray" />
+            android:textColor="#B0BEC5" />
 
         <Space
             android:layout_width="2dp"
@@ -37,8 +37,9 @@
             android:layout_weight="1"
             android:backgroundTint="@color/taskbar_black"
             android:ems="10"
-            android:inputType="number"
-            android:textColor="@color/text_light_gray" />
+            android:inputType="number|numberDecimal"
+            android:textColor="@color/text_light_gray"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +60,7 @@
             android:background="@color/medium_gray"
             android:gravity="center"
             android:text="@string/points_reached"
-            android:textColor="@color/text_light_gray" />
+            android:textColor="#B0BEC5" />
 
         <Space
             android:layout_width="2dp"
@@ -71,9 +72,10 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/taskbar_black"
             android:ems="10"
-            android:inputType="number"
+            android:inputType="number|numberDecimal"
             android:shadowColor="#B63E3E"
-            android:textColor="@color/text_light_gray" />
+            android:textColor="@color/text_light_gray"
+            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
     </LinearLayout>
 
     <Button

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/activity_main.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/activity_splash_screen.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/activity_subject.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/add_paper_dialog.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/content_main.xml" value="0.23854166666666668" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/edit_paper_dialog.xml" value="0.264" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/paper_field_layout.xml" value="0.6" />
+        <entry key="..\:/Users/Max/AndroidStudioProjects/NotenSpiegel/app/src/main/res/layout/yes_no_dialog.xml" value="0.264" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

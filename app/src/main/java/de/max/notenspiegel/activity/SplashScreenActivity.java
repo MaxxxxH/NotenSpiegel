@@ -12,8 +12,10 @@ import de.max.notenspiegel.databinding.ActivitySplashScreenBinding;
 
 
 /**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
+ * This Activity displays a splashscreen on app start.
+ *
+ * @author Max Hecht
+ * @version 1.0
  */
 public class SplashScreenActivity extends AppCompatActivity {
 

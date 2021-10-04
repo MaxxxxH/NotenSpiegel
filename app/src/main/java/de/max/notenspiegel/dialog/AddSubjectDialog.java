@@ -24,6 +24,12 @@ import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.activity.MainActivity;
 import de.max.notenspiegel.util.Util;
 
+/**
+ * This Dialog lets the user add a new Subject.
+ *
+ * @author Max Hecht
+ * @version 1.0
+ */
 public class AddSubjectDialog extends DialogFragment {
     private final MainActivity mainActivity;
     private SharedPreferences preferences;
@@ -51,6 +57,7 @@ public class AddSubjectDialog extends DialogFragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         assert (getDialog() != null);
+        //load views
         Button apply = view.findViewById(R.id.confirmDialogButton);
         Button cancel = view.findViewById(R.id.dialogCancelButton);
         TextView nameTextView = view.findViewById(R.id.addSubjectDialogName);
@@ -58,6 +65,7 @@ public class AddSubjectDialog extends DialogFragment {
         Setting defaultSettings = Setting.getDefaultSettings(view.getContext());
         maxAmountTextView.setText("" + defaultSettings.getMaxPaper());
         apply.setOnClickListener((v) -> {
+            //load and add new subject
             if (mainActivity == null) {
                 return;
             }

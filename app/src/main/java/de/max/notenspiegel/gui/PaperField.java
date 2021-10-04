@@ -1,7 +1,6 @@
 package de.max.notenspiegel.gui;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,11 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentManager;
 
 import org.jetbrains.annotations.NotNull;
 
 import de.max.notenspiegel.R;
 import de.max.notenspiegel.activity.SubjectActivity;
+import de.max.notenspiegel.dialog.AddPaperDialog;
+import de.max.notenspiegel.dialog.EditPaperDialog;
 import de.max.notenspiegel.structure.Paper;
 import de.max.notenspiegel.structure.Subject;
 
@@ -55,18 +57,31 @@ public class PaperField extends ConstraintLayout {
             subjectActivity.removePaperField(this);
         });
         update();
+        this.setOnLongClickListener((v) -> {
+            FragmentManager fm = subjectActivity.getSupportFragmentManager();
+            EditPaperDialog dialogFragment = new EditPaperDialog(this);
+            dialogFragment.show(fm, "fragment_edit_name");
+            return true;
+        });
     }
 
+    /**
+     * Updates the data of the paper field.
+     */
     public void update() {
         paperNumberTextView.setText(String.format(getResources().getString(R.string.paper_number), paper.getNumber()));
         System.out.println(getResources().getString(R.string.paper_number));
         percentTextView.setText(paper.getPercent() + "%");
-        percentTextView.setTextColor(mother.warnColor(paper.getPercent()).getColor( getContext()));
+        percentTextView.setTextColor(mother.warnColor(paper.getPercent()).getColor(getContext()));
         proportionTextView.setText(String.format(getResources().getString(R.string.paper_proportion), paper.getActualPoints(), paper.getMaxPoint()));
 
     }
 
-
+    /**
+     * Returns the paper object.
+     *
+     * @return the paper.
+     */
     public Paper getPaper() {
         return paper;
     }

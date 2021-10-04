@@ -16,7 +16,11 @@ import org.jetbrains.annotations.NotNull;
 import de.max.notenspiegel.R;
 
 /**
- * A Setting display field
+ * A Setting display field.
+ * Displays an editable setting option.
+ *
+ * @author Max Hecht
+ * @version 1.0
  */
 public class SettingField extends ConstraintLayout {
     private final EditText editText;
@@ -42,7 +46,7 @@ public class SettingField extends ConstraintLayout {
         textView.setText(description);
         editText = findViewById(R.id.settingFieldLayoutEditText);
         background = editText.getBackground();
-
+        //makes the view editable after long click.
         editText.setBackground(ContextCompat.getDrawable(context, R.color.dark_gray));
         editText.setFocusableInTouchMode(false);
         editText.setFocusable(false);

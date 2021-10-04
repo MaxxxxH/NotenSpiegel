@@ -31,14 +31,23 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * The Main Activity.
+ *
+ * @author Max Hecht
+ * @version 1.0
+ */
 public class MainActivity extends AppCompatActivity {
     private static final String KEY_KEY_NAMES = "keys";
     private ActivityMainBinding binding;
-    private List<Subject> subjects;
-    private Set<String> subjectKeys;
+    private final List<Subject> subjects;
+    private final Set<String> subjectKeys;
     private LinearLayout linearLayout;
     private SharedPreferences subjectPreferences;
 
+    /**
+     * The default Constructor.
+     */
     public MainActivity() {
         this.subjects = new ArrayList<>();
         subjectKeys = new HashSet<>();
@@ -72,6 +81,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Reloads all subject concerned views.
+     */
     private void updateView() {
         linearLayout.removeAllViews();
         for (Subject subject : subjects) {
@@ -97,8 +109,10 @@ public class MainActivity extends AppCompatActivity {
         Util.setKeys(subjectKeys, KEY_KEY_NAMES, subjectPreferences);
     }
 
+    /**
+     * Loads subjects from shared preferences.
+     */
     private void loadSubjects() {
-
         List<Subject> newList = Util.loadAll(KEY_KEY_NAMES, subjectPreferences, Subject.class);
         subjects.clear();
         subjectKeys.clear();
@@ -108,6 +122,11 @@ public class MainActivity extends AppCompatActivity {
         updateView();
     }
 
+    /**
+     * Adds a subject to the view and saves it.
+     *
+     * @param subject the subject getting saved.
+     */
     public void addSubject(Subject subject) {
         subjects.add(subject);
         subjectKeys.add(subject.getKey());
@@ -115,6 +134,11 @@ public class MainActivity extends AppCompatActivity {
         linearLayout.addView(new SubjectField(this, subject));
     }
 
+    /**
+     * Removes a subject.
+     *
+     * @param subject
+     */
     public void removeSubject(Subject subject) {
         subjects.remove(subject);
         subjectKeys.remove(subject.getKey());
@@ -126,6 +150,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Returns true if an identifier is not used yet.
+     *
+     * @param name the identifier.
+     * @return true if an identifier is not used yet.
+     */
     public boolean isNewIdentifier(String name) {
         if (name == null) {
             return false;

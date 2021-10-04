@@ -3,32 +3,32 @@ package de.max.notenspiegel.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
-
-import java.io.Serializable;
 
 import de.max.notenspiegel.R;
 import de.max.notenspiegel.databinding.ActivitySubjectBinding;
 import de.max.notenspiegel.dialog.AddPaperDialog;
+import de.max.notenspiegel.dialog.YesNoDialog;
 import de.max.notenspiegel.gui.PaperField;
-import de.max.notenspiegel.structure.Paper;
-import de.max.notenspiegel.structure.Setting;
-import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.gui.SubjectField;
+import de.max.notenspiegel.structure.Paper;
+import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.util.Util;
 
+/**
+ * This activity displays the papers of a subject.
+ *
+ * @author Max Hecht
+ * @version 1.0
+ */
 public class SubjectActivity extends AppCompatActivity {
     public static final String DELETE_SUBJECT = "delete_subject_extra";
     private static final String PAPER_SAVE_KEY = "paper_key";
@@ -74,11 +74,18 @@ public class SubjectActivity extends AppCompatActivity {
             AddPaperDialog dialogFragment = new AddPaperDialog(this);
             dialogFragment.show(fm, "fragment_edit_name");
         });
+
         findViewById(R.id.subjectDeleteImageButton).setOnClickListener((v) -> {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(DELETE_SUBJECT, this.subject);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            this.startActivity(intent);
+            FragmentManager fm = getSupportFragmentManager();
+            YesNoDialog dialogFragment = new YesNoDialog("Bitte bestätigen", null, null, () -> {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra(DELETE_SUBJECT, this.subject);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                this.startActivity(intent);
+                finish();
+            });
+            dialogFragment.show(fm, "fragment_delete");
+
         });
         setSupportActionBar(toolbar);
         toolbar.setTitle(subject.getName());
@@ -87,6 +94,9 @@ public class SubjectActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Update the percent views.
+     */
     public void update() {
 
         if (percentTextView == null || percentTotalTextView == null || subject == null) {
@@ -96,7 +106,7 @@ public class SubjectActivity extends AppCompatActivity {
         percentTextView.setTextColor(subject.warnColor(subject.getPercent()).getColor(this));
         percentTotalTextView.setText(" " + subject.getPercentTotal() + "% ");
         percentTotalTextView.setTextColor(subject.warnColor(subject.getPercentTotal()).getColor(this));
-
+        save();
     }
 
     @Override
@@ -104,28 +114,47 @@ public class SubjectActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    private void updatePreferences() {
+    /**
+     * Saves the current state to preferences.
+     */
+    private void save() {
         Util.save(subject, subjectPreferences);
     }
 
+    /**
+     * Returns the number of the next paper.
+     *
+     * @return the number of the next paper.
+     */
     public int getNext() {
         return subject.getNextNumber();
     }
 
+    /**
+     * Adds a paper to the display and to saves it.
+     *
+     * @param paper the paper getting added.
+     */
     public void addPaper(Paper paper) {
         subject.addPaper(paper);
         layout.addView(new PaperField(this, paper, subject));
         update();
-        updatePreferences();
+        save();
     }
 
+    /**
+     * Removes a paper.
+     */
     public void removePaperField(PaperField paperField) {
         subject.removePaper(paperField.getPaper());
         layout.removeView(paperField);
         update();
-        updatePreferences();
+        save();
     }
 
+    /**
+     * Adds saved papers to the display.
+     */
     private void loadPaperFields() {
         for (Paper paper : subject.getIterablePapers()) {
             layout.addView(new PaperField(this, paper, subject));
@@ -144,7 +173,7 @@ public class SubjectActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             Intent intent = new Intent(this, SubjectSettingsActivity.class);
             intent.putExtra(SubjectSettingsActivity.SUBJECT_SETTING,
-                   subject);
+                    subject);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             startActivity(intent);

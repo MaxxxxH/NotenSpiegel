@@ -1,6 +1,5 @@
 package de.max.notenspiegel.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -22,6 +21,12 @@ import de.max.notenspiegel.structure.Setting;
 import de.max.notenspiegel.structure.Subject;
 import de.max.notenspiegel.util.Util;
 
+/**
+ * This Activity lets the user change default- or subject specific settings.
+ *
+ * @author Max Hecht
+ * @version 1.0
+ */
 public class SubjectSettingsActivity extends AppCompatActivity {
     public static final String SUBJECT_SETTING = "subject_setting";
     public static final String DEFAULT_SETTING = "default_setting";
@@ -46,6 +51,7 @@ public class SubjectSettingsActivity extends AppCompatActivity {
         }
         layout = findViewById(R.id.settingsLayout);
 
+        //add Settings to display
         nameField = new SettingField(this, this.getString(R.string.subject_name), InputType.TYPE_CLASS_TEXT);
         maxPaperField = new SettingField(this, this.getString(R.string.paper_amount), InputType.TYPE_CLASS_NUMBER);
         goodField = new SettingField(this, this.getString(R.string.good_max_number), InputType.TYPE_CLASS_NUMBER);
@@ -53,6 +59,7 @@ public class SubjectSettingsActivity extends AppCompatActivity {
 
         addAll(nameField, maxPaperField, goodField, sufficientField);
 
+        //Load extra intent
         if (getIntent().hasExtra(SUBJECT_SETTING)) {
             Serializable serializable = getIntent().getSerializableExtra(SUBJECT_SETTING);
             if (serializable instanceof Subject) {
@@ -66,12 +73,14 @@ public class SubjectSettingsActivity extends AppCompatActivity {
             }
             System.out.println("has default setting " + serializable);
         }
+        //Load current settings
         if (this.setting != null) {
             loadSettings(this.setting);
         } else if (subject != null && this.subject.getSetting() != null) {
             loadSettings(this.subject.getSetting());
         }
 
+        //initialize buttons
         Button acceptButton = findViewById(R.id.settingsAcceptButton);
         acceptButton.setOnClickListener(acceptListener);
 
@@ -84,9 +93,12 @@ public class SubjectSettingsActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Saves settings and returns to the corresponding activity.
+     */
     private final View.OnClickListener acceptListener = v -> {
         String name = nameField.getValue();
+        //read values.
         int maxPaper;
         int good;
         int sufficient;
@@ -95,7 +107,7 @@ public class SubjectSettingsActivity extends AppCompatActivity {
             good = Integer.parseInt(goodField.getValue());
             sufficient = Integer.parseInt(sufficientField.getValue());
         } catch (NumberFormatException e) {
-            Toast.makeText(this,e.getMessage(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -114,10 +126,11 @@ public class SubjectSettingsActivity extends AppCompatActivity {
         }
 
         Intent intent;
-        if (setting != null) {
+        //save Settings
+        if (setting != null) { //default settings
             intent = new Intent(this, MainActivity.class);
             Util.save(newSetting, newSetting.getKey(), getSharedPreferences(Setting.KEY, MODE_PRIVATE));
-        } else if (subject != null) {
+        } else if (subject != null) { // specific settings
             if (name.isEmpty()) {
                 Toast.makeText(this, R.string.error_invalid_name, Toast.LENGTH_LONG);
                 return;
@@ -130,12 +143,17 @@ public class SubjectSettingsActivity extends AppCompatActivity {
             intent = new Intent(this, MainActivity.class);
             Toast.makeText(this, "error", Toast.LENGTH_SHORT).show();
         }
-
+        //launch corresponding activity
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         startActivity(intent);
     };
 
+    /**
+     * Loads settings to display.
+     *
+     * @param setting the settings
+     */
     private void loadSettings(Setting setting) {
         if (setting != null) {
             nameField.setText(setting.getName());
@@ -144,6 +162,7 @@ public class SubjectSettingsActivity extends AppCompatActivity {
             sufficientField.setText(setting.getSufficient() + "");
         }
         if (this.setting != null) {
+            //removes not needed settings
             removeAll(nameField, maxPaperField);
         }
     }

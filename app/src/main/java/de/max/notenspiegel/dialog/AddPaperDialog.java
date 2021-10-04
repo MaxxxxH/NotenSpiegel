@@ -18,6 +18,12 @@ import de.max.notenspiegel.R;
 import de.max.notenspiegel.activity.SubjectActivity;
 import de.max.notenspiegel.structure.Paper;
 
+/**
+ * This Dialog lets the user add a new paper to a subject.
+ *
+ * @author Max Hecht.
+ * @version 1.0
+ */
 public class AddPaperDialog extends DialogFragment {
     private final SubjectActivity subjectActivity;
 
@@ -57,13 +63,13 @@ public class AddPaperDialog extends DialogFragment {
                 Toast.makeText(view.getContext(), getString(R.string.field_empty, "Punktzahl"), Toast.LENGTH_SHORT).show();
                 return;
             }
-            int maxValue = getValue(maxTextView);
+            double maxValue = getValue(maxTextView);
 
             if (maxValue < 1) {
                 Toast.makeText(view.getContext(), R.string.error_max_value_smaller_than_one, Toast.LENGTH_SHORT).show();
                 return;
             }
-            Paper paper = new Paper(getValue(pointTextView), getValue(maxTextView), subjectActivity.getNext());
+            Paper paper = new Paper(getValue(pointTextView), maxValue, subjectActivity.getNext());
             subjectActivity.addPaper(paper);
             getDialog().cancel();
 
@@ -73,9 +79,9 @@ public class AddPaperDialog extends DialogFragment {
         });
     }
 
-    private int getValue(TextView editText) {
+    private double getValue(TextView editText) {
         try {
-            return Integer.parseInt(editText.getText().toString());
+            return Double.parseDouble(editText.getText().toString());
         } catch (NumberFormatException e) {
             return -1;
         }
